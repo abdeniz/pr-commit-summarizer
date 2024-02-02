@@ -52,6 +52,7 @@ jobs:
         uses: ./
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          pr-number: ${{ github.event.number }}
 
       - name: Print Output
         id: output

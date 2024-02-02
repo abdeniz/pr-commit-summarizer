@@ -29058,11 +29058,7 @@ async function run() {
     try {
         const auth = process.env.GITHUB_TOKEN || core.getInput('token');
         const octokit = new rest_1.Octokit({ auth });
-        const prNumber = github.context.payload.pull_request?.number;
-        if (!prNumber) {
-            core.setFailed("Pull request number couldn't be fetched.");
-            return;
-        }
+        const prNumber = Number(core.getInput('pr-number'));
         const { data: commits } = await octokit.pulls.listCommits({
             owner: github.context.repo.owner,
             repo: github.context.repo.repo,
