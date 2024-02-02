@@ -1,5 +1,7 @@
 import * as core from '@actions/core'
+import * as github from '@actions/github'
 import { wait } from './wait'
+import { Octokit } from '@octokit/rest'
 
 /**
  * The main function for the action.
@@ -7,20 +9,28 @@ import { wait } from './wait'
  */
 export async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
+    const auth = process.env.GITHUB_TOKEN || core.getInput('github-token')
+    const octokit = new Octokit({ auth })
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    const prNumber = github.context.payload.pull_request?.number
 
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    if (!prNumber) {
+      core.setFailed("Pull request number couldn't be fetched.")
+      return
+    }
 
-    // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
+    const { data: commits } = await octokit.pulls.listCommits({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      pull_number: prNumber
+    })
+
+    const commitSummary = commits
+      .map(commit => `* ${commit.commit.message}`)
+      .join('\n')
+
+    core.setOutput('summary', commitSummary)
   } catch (error) {
-    // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
   }
 }
