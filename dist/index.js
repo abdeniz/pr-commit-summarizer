@@ -29056,7 +29056,7 @@ const rest_1 = __nccwpck_require__(5375);
  */
 async function run() {
     try {
-        const auth = process.env.GITHUB_TOKEN || core.getInput('github-token');
+        const auth = process.env.GITHUB_TOKEN || core.getInput('token');
         const octokit = new rest_1.Octokit({ auth });
         const prNumber = github.context.payload.pull_request?.number;
         if (!prNumber) {
