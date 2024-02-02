@@ -8,7 +8,7 @@ import { Octokit } from '@octokit/rest'
  */
 export async function run(): Promise<void> {
   try {
-    const auth = process.env.GITHUB_TOKEN || core.getInput('github-token')
+    const auth = process.env.GITHUB_TOKEN || core.getInput('token')
     const octokit = new Octokit({ auth })
 
     const prNumber = github.context.payload.pull_request?.number
