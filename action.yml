@@ -12,6 +12,9 @@ inputs:
   token:
     description: 'Your Github token'
     required: true
+  pr-number:
+    description: 'The PR number'
+    required: true
 
 # Define your outputs here.
 outputs:
