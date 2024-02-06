@@ -25,9 +25,7 @@ export async function run(): Promise<void> {
       .join('\n')
 
     const summary = `
-      ## Release notes
-
-      ${commitSummary}
+      ## Release notes\n${commitSummary}
     `
 
     core.setOutput('summary', summary)

@@ -29069,9 +29069,7 @@ async function run() {
             .map(commit => `* ${commit.sha.substring(0, 7)} ${commit.commit.message}`)
             .join('\n');
         const summary = `
-      ## Release notes
-
-      ${commitSummary}
+      ## Release notes\n${commitSummary}
     `;
         core.setOutput('summary', summary);
     }
