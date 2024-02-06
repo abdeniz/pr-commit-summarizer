@@ -29065,7 +29065,7 @@ async function run() {
             pull_number: prNumber
         });
         const commitSummary = commits
-            .map(commit => `* [${commit.sha.substring(0, 7)}](${commit.url}) ${commit.commit.message}`)
+            .map(commit => `* [${commit.sha.substring(0, 7)}](${commit.commit.url}) ${commit.commit.message}`)
             .join('\n');
         const summary = `
       ## Release notes \n
