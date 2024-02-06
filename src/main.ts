@@ -20,15 +20,12 @@ export async function run(): Promise<void> {
     })
 
     const commitSummary = commits
-      .map(
-        commit =>
-          `* [${commit.sha.substring(0, 7)}](${commit.commit.url}) ${commit.commit.message}`
-      )
+      .map(commit => `* ${commit.sha.substring(0, 7)} ${commit.commit.message}`)
       .join('\n')
 
     const summary = `
       ## Release notes
-      
+
       ${commitSummary}
     `
 
