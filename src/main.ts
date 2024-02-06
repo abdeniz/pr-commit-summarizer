@@ -20,6 +20,7 @@ export async function run(): Promise<void> {
     })
 
     const commitSummary = commits
+      .filter(commit => !commit.commit.message.startsWith('Merge'))
       .map(commit => `* ${commit.sha.substring(0, 7)} ${commit.commit.message}`)
       .join('\n')
 
