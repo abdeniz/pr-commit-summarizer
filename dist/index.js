@@ -29065,9 +29065,14 @@ async function run() {
             pull_number: prNumber
         });
         const commitSummary = commits
-            .map(commit => `* ${commit.commit.message}`)
+            .map(commit => `* [${commit.sha.substring(0, 7)}](${commit.url}) ${commit.commit.message}`)
             .join('\n');
-        core.setOutput('summary', commitSummary);
+        const summary = `
+      ## Release notes \n
+      \n
+      ${commitSummary}
+    `;
+        core.setOutput('summary', summary);
     }
     catch (error) {
         if (error instanceof Error)
